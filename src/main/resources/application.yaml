@@ -1,5 +1,22 @@
 spring:
   application:
     name: eureka-server
+  profiles:
+    active: local
   config:
-    import: configserver:http://config-admin:config-secret@localhost:8888
+    import: optional:file:.env[.properties]
+  cloud:
+    config:
+      enabled: false
+
+server:
+  port: ${SERVER_PORT}
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:${SERVER_PORT}/eureka/
